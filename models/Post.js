@@ -4,6 +4,7 @@ const PostSchema = new Schema(
 	{
 		title: String,
 		text: String,
+		backgroundURL: String
 	},
 	{
 		timestaps: true

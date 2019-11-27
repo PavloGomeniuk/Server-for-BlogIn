@@ -10,12 +10,12 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PostSchema = new _mongoose.Schema({
-	title: String,
-	text: String
-}, {
-	timestaps: true
-});
+var PostSchema = new _mongoose.Schema(
+	{title: String,
+	text: String,
+	backgroundURL: String},
+	{timestaps: true}
+	);
 
 var Post = _mongoose2.default.model('Post', PostSchema);
 

@@ -18,44 +18,37 @@ var _Post2 = _interopRequireDefault(_Post);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const posts = [
-// 	{
-// 		title: "Helll",
-// 		text: "welcome hell"
-// 	},
-// 	{
-// 		title: "Helllooo",
-// 		text: "welcome helloo"
-// 	},
-// ]
-
-
-// app.get('/posts/:id', function(req,res){
-// 	const id = req.params.id;
-// 	return res.send(posts[id]);
-// });
-
-
-// const express = require('express');
-
-
-// const bodyParser = require('body-parser');
 
 var app = (0, _express2.default)();
 _mongoose2.default.connect('mongodb://localhost/test');
+app.use(function (req, res, next) {
 
+	// Website you wish to allow to connect
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+
+	// Request methods you wish to allow
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+	// Request headers you wish to allow
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+	// Set to true if you need the website to include cookies in the requests sent
+	// to the API (e.g. in case you use sessions)
+	res.setHeader('Access-Control-Allow-Credentials', true);
+
+	// Pass to next layer of middleware
+	next();
+});
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
 
 app.post('/posts', function (req, res) {
 	var data = req.body;
-	// console.log(data);
-	// posts.push(data);
-	// return res.send(posts);
 
 	var post = new _Post2.default({
 		title: data.title,
-		text: data.text
+		text: data.text,
+		backgroundURL: data.backgroundURL
 	});
 
 	post.save().then(function () {

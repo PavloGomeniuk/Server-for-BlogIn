@@ -1,33 +1,4 @@
 
-
-
-// const posts = [
-// 	{
-// 		title: "Helll",
-// 		text: "welcome hell"
-// 	},
-// 	{
-// 		title: "Helllooo",
-// 		text: "welcome helloo"
-// 	},
-// ]
-
-
-
-// app.get('/posts/:id', function(req,res){
-// 	const id = req.params.id;
-// 	return res.send(posts[id]);
-// });
-
-
-
-
-
-// const express = require('express');
-
-
-// const bodyParser = require('body-parser');
-
 import mongoose from 'mongoose';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -35,7 +6,24 @@ import PostModel from './models/Post';
 
 const app = express();
 mongoose.connect('mongodb://localhost/test');
+app.use(function (req, res, next) {
 
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -43,13 +31,10 @@ app.use(bodyParser.json());
 
 app.post('/posts', (req,res)=> {
 	const data = req.body;
-	// console.log(data);
-	// posts.push(data);
-	// return res.send(posts);
-
 	const post = new PostModel({
 	title: data.title,
-	text: data.text
+	text: data.text,
+	backgroundURL: data.backgroundURL
 	});
 
 	post.save().then(()=>{
