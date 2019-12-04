@@ -65,6 +65,15 @@ app.get('/posts', function (req, res) {
 	});
 });
 
+app.get('/posts/:id', function (req, res) {
+	_Post2.default.findOne({ _id: req.params.id }).then(function (err, posts) {
+		if (err) {
+			res.send(err);
+		}
+		res.json(posts);
+	});
+});
+
 app.delete('/posts/:id', function (req, res) {
 	_Post2.default.remove({
 		_id: req.params.id

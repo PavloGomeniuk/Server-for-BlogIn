@@ -51,6 +51,15 @@ app.get('/posts',(req,res)=>{
 	});
 });
 
+app.get('/posts/:id',(req,res)=>{
+	PostModel.findOne({ _id: req.params.id }).then((err,posts)=>{
+		if (err) {
+			res.send(err);
+		}
+		res.json(posts);
+	});
+});
+
 app.delete('/posts/:id', (req,res)=>{
 	PostModel.remove({
 		_id: req.params.id
