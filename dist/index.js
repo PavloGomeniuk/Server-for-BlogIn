@@ -20,7 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 var app = (0, _express2.default)();
-_mongoose2.default.connect('mongodb://172.17.0.2/test');
+_mongoose2.default.connect('mongodb://mongo/test');
 app.use(function (req, res, next) {
 
 	// Website you wish to allow to connect
