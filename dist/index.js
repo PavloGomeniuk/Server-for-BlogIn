@@ -20,11 +20,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 var app = (0, _express2.default)();
-_mongoose2.default.connect('mongodb://localhost/test');
+_mongoose2.default.connect('mongodb://172.17.0.2/test');
 app.use(function (req, res, next) {
 
 	// Website you wish to allow to connect
-	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
 
 	// Request methods you wish to allow
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -60,6 +60,7 @@ app.get('/posts', function (req, res) {
 	_Post2.default.find().then(function (err, posts) {
 		if (err) {
 			res.send(err);
+			return;
 		}
 		res.json(posts);
 	});
@@ -69,6 +70,7 @@ app.get('/posts/:id', function (req, res) {
 	_Post2.default.findOne({ _id: req.params.id }).then(function (err, posts) {
 		if (err) {
 			res.send(err);
+			return;
 		}
 		res.json(posts);
 	});
@@ -90,8 +92,9 @@ app.put('/posts/:id', function (req, res) {
 	_Post2.default.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err) {
 		if (err) {
 			res.send(err);
+			return;
 		}
-		res.json({ status: 'udated' });
+		res.json({ status: 'updated' });
 	});
 });
 
